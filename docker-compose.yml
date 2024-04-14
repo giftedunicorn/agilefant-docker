@@ -1,0 +1,43 @@
+# agilefant:
+#   image: csphere/agilefant
+#   volumes_from:
+#     - mysql
+#   links:
+#     - mysql
+
+#   environment:
+#     - AGILE_MYSQL_USER=agilefant 
+#     - AGILE_MYSQL_PASSWORD=agilefant 
+#     - DB_HOST_NAME=mysql_db
+#   command: /data/init.sh catalina.sh run
+#   ports:
+#     - "8888:8080"
+
+# mysql:
+#   image: reg.csphere.cn/mysql:5.5
+#   volumes:
+#     - /usr/local/mysql
+#   environment:
+#     - MYSQL_ROOT_PASSWORD=root 
+#     - MYSQL_DATABASE=agilefant 
+#     - MYSQL_USER=agilefant 
+#     - MYSQL_PASSWORD=agilefant
+#   hostname: mysql_db
+#   ports:
+#     - "3306:3306"
+
+db:
+    # image: mariadb:latest
+   image: mysql:latest
+    environment:
+    - MYSQL_ROOT_PASSWORD=root
+    - MYSQL_DATABASE=agilefant
+    - MYSQL_USER=agilefant
+    - MYSQL_PASSWORD=agilefant
+
+app:
+    image: edward8628/agilefant:latest
+    ports:
+        - "8080:8080"
+    links:
+        - "db:db"
